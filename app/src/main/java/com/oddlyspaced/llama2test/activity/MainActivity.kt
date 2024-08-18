@@ -1,9 +1,12 @@
 package com.oddlyspaced.llama2test.activity
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -32,14 +35,29 @@ class MainActivity : ComponentActivity() {
                         FilePicker(
                             title = "Pick Model File",
                             buttonText = "Select",
-                            onClickSelect = { /*TODO*/ },
-                            subtitle = vm.modelFilePath ?: "Nothing Selected"
+                            onFileSelect = {
+                                vm.modelFileUri = it
+                            },
+//                            subtitle =  vm.modelFileUri?.toString() ?: "Nothing Selected"
+                            subtitle = vm.modelFileUri?.let {
+                                vm.getFileProps(
+                                    applicationContext,
+                                    it
+                                )
+                            } ?: "Nothing Selected"
                         )
                         FilePicker(
                             title = "Pick Tokenizer File",
                             buttonText = "Select",
-                            onClickSelect = { /*TODO*/ },
-                            subtitle = vm.tokenFilePath ?: "Nothing Selected"
+                            onFileSelect = {
+                                vm.tokenFileUri = it
+                            },
+                            vm.tokenFileUri?.let {
+                                vm.getFileProps(
+                                    applicationContext,
+                                    it
+                                )
+                            } ?: "Nothing Selected"
                         )
                     }
                 }
@@ -52,13 +70,21 @@ class MainActivity : ComponentActivity() {
 fun FilePicker(
     title: String,
     buttonText: String,
-    onClickSelect: () -> Unit,
+    onFileSelect: (Uri?) -> Unit,
     subtitle: String,
     modifier: Modifier = Modifier
 ) {
+    val filePickerLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) {
+            onFileSelect(it)
+        }
+
     Column(modifier.padding(PaddingValues(start = 16.dp, top = 12.dp))) {
         Text(title)
-        Button(onClick = onClickSelect, modifier = Modifier.padding(PaddingValues(top = 4.dp))) {
+        Button(
+            onClick = { filePickerLauncher.launch("*/*") },
+            modifier = Modifier.padding(PaddingValues(top = 4.dp))
+        ) {
             Text(buttonText)
         }
         Text(text = subtitle, modifier = Modifier.padding(PaddingValues(top = 4.dp)))
