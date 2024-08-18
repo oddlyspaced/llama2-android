@@ -2,6 +2,7 @@ package com.oddlyspaced.llama2test.activity
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -17,7 +18,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.oddlyspaced.llama2test.ui.theme.Llama2TestTheme
 import com.oddlyspaced.llama2test.viewmodel.MainViewModel
 
@@ -59,6 +62,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             } ?: "Nothing Selected"
                         )
+                        RunModel(modifier = Modifier)
                     }
                 }
             }
@@ -88,5 +92,17 @@ fun FilePicker(
             Text(buttonText)
         }
         Text(text = subtitle, modifier = Modifier.padding(PaddingValues(top = 4.dp)))
+    }
+}
+
+@Composable
+fun RunModel(modifier: Modifier) {
+    val viewModel = viewModel<MainViewModel>()
+    val context = LocalContext.current
+    Button(onClick = {
+        viewModel.runModel(context)
+//        Log.d("TESTING", viewModel.modelFileUri.toString())
+    }) {
+        Text("Run Model")
     }
 }
