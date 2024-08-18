@@ -1,4 +1,4 @@
-package com.oddlyspaced.llama2test
+package com.oddlyspaced.llama2test.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
