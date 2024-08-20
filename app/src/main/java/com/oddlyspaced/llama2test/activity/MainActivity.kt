@@ -135,14 +135,35 @@ fun RunModel(modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     Column(modifier.padding(PaddingValues(top = 16.dp))) {
-        TextField(
-            value = viewModel.prompt,
-            onValueChange = { viewModel.prompt = it },
-            label = { Text("Prompt") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            TextField(
+                value = viewModel.prompt,
+                onValueChange = { viewModel.prompt = it },
+                label = { Text("Prompt") },
+                modifier = Modifier.fillMaxWidth(0.5f)
+            )
+            TextField(
+                value = viewModel.temperature.toString(),
+                onValueChange = { viewModel.temperature = it.toFloat() },
+                label = { Text("Temp") },
+                modifier = Modifier.fillMaxWidth(0.5f)
+            )
+            TextField(
+                value = viewModel.steps.toString(),
+                onValueChange = { viewModel.steps = it.toInt() },
+                label = { Text("Steps") },
+                modifier = Modifier.fillMaxWidth(0.8f)
+            )
+        }
+
         Button(onClick = {
-            viewModel.runModel(context, 0F, 256, viewModel.prompt, 10)
+            viewModel.runModel(
+                context,
+                viewModel.temperature,
+                viewModel.steps,
+                viewModel.prompt,
+                10
+            )
         }, modifier = modifier.padding(PaddingValues(top = 8.dp))) {
             Text("Run Model")
         }
