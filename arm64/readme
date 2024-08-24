@@ -1,0 +1,9 @@
+JNI module for llama2.c file
+
+to compile the libs, run 
+ndk-build
+
+/Users/hardik/Library/Android/sdk/ndk/27.0.12077973/ndk-build
+
+
+Reference: https://github.com/Manuel030/llama2.c-android
