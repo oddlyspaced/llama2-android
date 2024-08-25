@@ -16,5 +16,7 @@ Please read the following article for understanding this project :
 
 ### References
 https://github.com/karpathy/llama2.c
+
 https://github.com/madroidmaq/llama2.kt
+
 https://github.com/Manuel030/llama2.c-android
