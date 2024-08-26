@@ -4,7 +4,7 @@ This repository contains an Android implementation (along with other materials),
 It is directly inspired (and based) on the project [llama2.c](https://github.com/karpathy/llama2.c) by [Andrej Karpathy](https://github.com/karpathy)
 
 Please read the following article for understanding this project :
- todo link
+https://medium.com/@srivastavahardik/benchmarking-llama-2-on-android-a-tale-of-two-implementations-35228d6ede9e
 
 ### Screenshots
 ![App UI](https://github.com/oddlyspaced/llama2-android/blob/main/screenshots/ss_app.png?raw=true)
